@@ -1,0 +1,328 @@
+
+<div class="login page-width">
+  <div class="login__brand">
+    <h1 class="login__logo">
+      {% if section.settings.header_text != blank %}{{ section.settings.header_text }}{% endif %}
+          {% if section.settings.image_logo != blank %}
+      <img alt="{{ section.settings.image_logo.alt }}" itemprop="logo" src="{{ section.settings.image_logo | img_url: 'master' }}">
+                  {% endif %}
+    </h1>
+  </div>
+  <div id="AccountSignupPage" class="account-signup__content">
+    <div class="signup__content copy">
+      <p> {{ section.settings.description_form }} </p>
+    </div>
+{% form 'contact' %}
+  {%- if form.posted_successfully? -%}
+              <p class="note note--success">
+                {{ 'contact.form.post_success' | t }}
+              </p>
+            {%- endif -%}
+      <div id="AccountSignupForm">     
+        {% for block in section.blocks %}
+          {% if block.type == 'contactdetails' %}
+        <div id="DetailsSection" class="signup-form-section">
+          <div class="signup-form-section__header--container expanded">
+            <div class="signup-form-section__header">
+              <div class="signup-form-section__header--label">{{ block.settings.contactdet_header }}</div>
+            </div>
+          </div>
+          <div class="signup-form-section__fields">
+            <div class="field-group">
+             <label for="ContactFormName-{{ section.id }}">{{ 'contact.form.name' | t }}</label>
+            <input required type="text" id="ContactFormName-{{ section.id }}" class="input-full" name="contact[name]" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+            </div>
+             <div class="field-group">
+             <label for="ContactFormName-{{ section.id }}">Address 1</label>
+            <input type="text" id="ContactFormName-{{ section.id }}" class="input-full" name="contact[Address1]" autocapitalize="words">
+            </div>
+             <div class="field-group">
+             <label for="ContactFormName-{{ section.id }}">Address 2</label>
+            <input type="text" id="ContactFormName-{{ section.id }}" class="input-full" name="contact[Address2]" autocapitalize="words">
+            </div>
+             <div class="field-group">
+             <label for="ContactFormName-{{ section.id }}">City</label>
+            <input type="text" id="ContactFormName-{{ section.id }}" class="input-full" name="contact[City]" autocapitalize="words">
+            </div>
+             <div class="field-group">
+             <label for="ContactFormName-{{ section.id }}">State</label>
+            <input type="text" id="ContactFormName-{{ section.id }}" class="input-full" name="contact[State]" autocapitalize="words">
+            </div>
+             <div class="field-group">
+             <label for="ContactFormName-{{ section.id }}">Postal Code</label>
+            <input type="text" id="ContactFormName-{{ section.id }}" class="input-full" name="contact[Postal Code]" autocapitalize="words">
+            </div>
+             <div class="field-group">
+             <label for="ContactFormName-{{ section.id }}">Country</label>
+            <input type="text" id="ContactFormName-{{ section.id }}" class="input-full" name="contact[Country]" autocapitalize="words">
+            </div>
+            <div class="field-group">
+            <label for="ContactFormPhone-{{ section.id }}">{{ 'contact.form.phone' | t }}</label>
+          <input type="tel" id="ContactFormPhone-{{ section.id }}" class="input-full" name="contact[phone]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+            </div>
+            <div class="field-group">
+               <label for="ContactFormEmail-{{ section.id }}">{{ 'contact.form.email' | t }}</label>
+            <input required type="email" id="ContactFormEmail-{{ section.id }}" class="input-full" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+            </div>
+             <div class="field-group">
+             <label for="ContactFormName-{{ section.id }}"># of Full Time Stylists</label>
+            <input required type="text" id="ContactFormName-{{ section.id }}" class="input-full" name="contact[# of Full Time Stylists]" autocapitalize="words">
+            </div>
+            <div class="field-group">
+             <label for="ContactFormName-{{ section.id }}">Business name</label>
+            <input required type="text" id="ContactFormName-{{ section.id }}" class="input-full" name="contact[Business name]" autocapitalize="words">
+            </div>
+               <div class="field-group">
+             <label for="ContactFormName-{{ section.id }}">What is your role in the company?</label>
+            <input required type="text" id="ContactFormName-{{ section.id }}" class="input-full" name="contact[What is your role in the company?]" autocapitalize="words">
+            </div>
+              <div class="field-group">
+             <label for="ContactFormName-{{ section.id }}">Website</label>
+            <input required type="text" id="ContactFormName-{{ section.id }}" class="input-full" name="contact[Website]" autocapitalize="words">
+            </div>
+             <div class="field-group">
+             <label for="ContactFormName-{{ section.id }}">Is there anything else you'd like to share with us?</label>
+            <textarea rows="5" id="ContactFormMessage-{{ section.id }}" class="input-full" name="contact[Is there anything else you'd like to share with us?]"></textarea>
+            </div>
+          </div>
+        </div>
+            {% endif %}
+          {% endfor %}
+
+        {% for block in section.blocks %}
+          {% if block.type == 'additionalinfo' %}
+        <div id="CustomFieldsSection" class="signup-form-section signup-form-section--last">
+          <div class="signup-form-section__header--container">
+            <div class="signup-form-section__header">
+              <div class="signup-form-section__header--label">{{ block.settings.addinf_header }}</div>
+            </div>
+          </div>
+          <div class="signup-form-section__fields ">
+           {% if block.settings.addinf_label1head != blank %}
+            <div class="field-group">
+              <label class="field-label" for="account_signup_questions_attributes_0_answer">{{ block.settings.addinf_label1head }}</label>
+              <input class="textfield" size="30" type="text" name="contact[{{ block.settings.addinf_label1head }}]" id="account_signup_questions_attributes_0_answer" required>
+            </div>
+             {% endif %}
+            <input autocomplete="off" size="30" type="hidden" value="{{ block.settings.addinf_label2head }}" name="account[signup_questions_attributes][1][question]" id="account_signup_questions_attributes_1_question">
+            {% if block.settings.addinf_label2head != blank %}
+            <div class="field-group">
+              <label class="field-label" for="account_signup_questions_attributes_1_answer">{{ block.settings.addinf_label2head }}</label>
+              <input class="textfield" size="30" type="text" name="contact[{{ block.settings.addinf_label2head }}]" id="account_signup_questions_attributes_1_answer" required>
+            </div>
+              {% endif %}
+            <input autocomplete="off" size="30" type="hidden" value="{{ block.settings.addinf_label3head }}" name="account[signup_questions_attributes][2][question]" id="account_signup_questions_attributes_2_question">
+           {% if block.settings.addinf_label3head != blank %}
+            <div class="field-group">
+              <label class="field-label" for="account_signup_questions_attributes_2_answer">{{ block.settings.addinf_label3head }}</label>
+              <input class="textfield"    size="30" type="text" name="contact[{{ block.settings.addinf_label3head }}]" id="account_signup_questions_attributes_2_answer" required>
+            </div>
+             {% endif %}
+            <input autocomplete="off" size="30" type="hidden" value="{{ block.settings.addinf_label4head }}" name="account[signup_questions_attributes][3][question]" id="account_signup_questions_attributes_3_question">
+            {% if block.settings.addinf_label4head != blank %}
+            <div class="field-group">
+              <label class="field-label" for="account_signup_questions_attributes_3_answer">{{ block.settings.addinf_label4head }}</label>
+              <input class="textfield" size="30" type="text" name="contact[{{ block.settings.addinf_label4head }}]" id="account_signup_questions_attributes_3_answer" required>
+            </div>
+              {% endif %}
+            <input autocomplete="off" size="30" type="hidden" value="{{ block.settings.addinf_label5head }}" name="account[signup_questions_attributes][4][question]" id="account_signup_questions_attributes_4_question">
+           {% if block.settings.addinf_label5head != blank %}
+            <div class="field-group">
+              <label class="field-label" for="account_signup_questions_attributes_4_answer">{{ block.settings.addinf_label5head }}</label>
+              <input class="textfield"    size="30" type="text" name="contact[{{ block.settings.addinf_label5head }}]" id="account_signup_questions_attributes_4_answer" required>
+            </div>
+             {% endif %}
+          </div>
+        </div>
+            {% endif %}
+        {% endfor %}
+        
+ <button type="submit" class="form btn btn--primary">
+              {{ section.settings.buttontext }}
+            </button>
+      </div>
+  {% endform %}
+</div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Custom Form",
+    "settings": [
+      {
+        "id":"image_logo",
+        "type":"image_picker",
+        "label":"Logo Picker"
+      },
+      {
+            "type":"text",
+            "id":"header_text",
+            "label":"Section Header Text"
+          },
+       {
+        "id":"description_form",
+        "type":"richtext",
+        "label":"Under Logo Description"
+      },
+      {
+            "type":"text",
+            "id":"buttontext",
+            "label":"Sumbit Button Text"
+          }
+    ],
+    "blocks": [
+      {
+        "name":"Additional Informations",
+        "type":"additionalinfo",
+        "settings": [
+           {
+            "type":"text",
+            "id":"addinf_header",
+            "label":"Section Header"
+          },
+          {
+            "type":"text",
+            "id":"addinf_label1head",
+            "label":"Label Heading 1"
+          },
+          {
+            "type":"text",
+            "id":"addinf_label2head",
+            "label":"Label Heading 2"
+          },
+          {
+            "type":"text",
+            "id":"addinf_label3head",
+            "label":"Label Heading 3"
+          },
+          {
+            "type":"text",
+            "id":"addinf_label4head",
+            "label":"Label Heading 4"
+          },
+          {
+            "type":"text",
+            "id":"addinf_label5head",
+            "label":"Label Heading 5"
+          }
+        ]
+      },
+       {
+        "name":"Contact Details",
+        "type":"contactdetails",
+        "settings": [
+           {
+            "type":"text",
+            "id":"contactdet_header",
+            "label":"Section Header"
+          },
+          {
+            "type":"text",
+            "id":"contactdet_label1head",
+            "label":"First Name"
+          },
+          {
+            "type":"text",
+            "id":"contactdet_label2head",
+            "label":"Last Name"
+          },
+          {
+            "type":"text",
+            "id":"contactdet_label3head",
+            "label":"Email address"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name":"Custom Form"
+      }
+    ]
+  }
+{% endschema %}
+<style>
+  button.form.btn.btn--primary {
+    width: 100%;
+}
+ button.form.btn.btn--primary:hover{
+  border: 1px solid;
+ }
+  .field-group > input:hover {
+    border-color: black;
+    border-right-width: 1px;
+}
+  .field-group > input:focus {
+    border: 1px solid black!important;
+  }
+ .login.page-width {
+    max-width: 722px;
+   width:100%;
+    margin: 0 auto;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+  .signup__content.copy, h1.login__logo {
+    text-align: center;
+}
+  div#AccountSignupForm {
+    background: rgb(250, 231, 233);
+    box-sizing: border-box;
+    margin: 0.75rem 0.625rem auto;
+    padding: 1.5rem 1rem;
+    border-radius: 0.75rem;
+}
+  .field-group {
+    box-sizing: border-box;
+    color: #505256;
+    font-size: 14px;
+    line-height: 1.5715;
+    list-style: none;
+    margin: 0 0 24px;
+    padding: 0;
+    vertical-align: top;
+}
+  .field-group > input,
+  .field-group > textarea {
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    box-sizing: border-box;
+    color: #505256;
+    display: inline-block;
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    margin: 0;
+    min-width: 0;
+    padding: 4px 11px;
+    position: relative;
+    transition: all .3s;
+    width: 100%;
+}
+  
+  </style>
+
+{% javascript %}
+class openCloseHandler {
+  allElements = document.querySelectorAll(".signup-form-section__header--container");
+
+
+    // Show success message on form submission
+    const form = document.getElementById("AccountSignupForm");
+    form.addEventListener("submit", this.showSuccessMessage.bind(this));
+
+  showSuccessMessage(e) {
+    e.preventDefault();
+    const successMessage = document.getElementById("successMessage");
+    successMessage.style.display = "block";
+  }
+}
+
+window.openClose = new openCloseHandler();
+
+
+{% endjavascript %}
